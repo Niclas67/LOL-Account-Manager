@@ -1,0 +1,9 @@
+# Python virtual environment
+.venv/
+
+# SQLite database file
+Accounts.db
+
+# Python cache files
+__pycache__/
+*.pyc
