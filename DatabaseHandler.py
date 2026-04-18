@@ -1,5 +1,5 @@
 import sqlite3
-from Account import Account
+from Account import Account, register_new_account
 import APIHandler
 
 class DatabaseHandler():
@@ -52,24 +52,41 @@ class DatabaseHandler():
                          """, (new_username, puuid))
         self.con.commit()
 
-    def update_info(self, puuid : str):
-        info = APIHandler.get_summonerInfo(puuid)
+    def update_account(self, account : Account):
         self.cur.execute("""
-                        Update accounts
-                        SET division = ?,
+                        UPDATE accounts
+                        SET username = ?,
+                            tag = ?,
+                            login_username = ?,
+                            password = ?,
+                            server = ?,
+                            email = ?,
+                            division = ?,
                             rank = ?,
                             lp = ?,
                             wins = ?,
                             losses = ?
                         WHERE puuid = ?
-                         """, (info['division'], info['rank'], info['lp'], info['wins'], info['losses'], puuid))
+                        """, (account.username,account.tag,account.login_username,account.password,account.server,account.email,account.division,account.rank,account.lp,account.wins,account.losses,account.puuid))
         self.con.commit()
+
+    def get_account(self, puuid : str):
+        o = self.cur.execute("""
+                        SELECT *
+                        FROM accounts
+                        WHERE puuid = ?
+                        """, (puuid,))
+        return Account(*o.fetchone())
 
 
 if __name__ == "__main__":
-    DatabaseHandler().update_info("g-o7F9BEm8tdLMrb5-dKiPHgODbCO0SEgIDU6N9PoS8zj0nWEVJ6rk4GiTPtyXIBoY0amH3udNRdwQ")
-    #db_handler = DatabaseHandler()
-    #db_handler.update_username("g-o7F9BEm8tdLMrb5-dKiPHgODbCO0SEgIDU6N9PoS8zj0nWEVJ6rk4GiTPtyXIBoY0amH3udNRdwQ", "new_username")
-    #db_handler.add_account(Account("ballsohard", "EUW", "login_username", "password"))
-
-    
+    db_handler = DatabaseHandler()
+    account = db_handler.get_account("JcGQa-Q3kLBp6leFDw44QwqKpXFJzrd0v8-BVq6FbUR6f8RbM2yvfJTBxEstuaw5Gw7fj9GrVMJfaQ")
+    account.username = "TEST"
+    account.update_info()
+    db_handler.update_account(account)
+    #account.update_info()
+    #account.update_password("new_password")
+    #print(account)
+    #account = register_new_account("Masaru", "445", "liu", "pw")
+    print(account)
