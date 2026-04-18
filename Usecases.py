@@ -4,6 +4,8 @@ import APIHandler
 import pyperclip
 import pyautogui
 import keyboard
+import threading
+import time
 
 class Usecases():
     def __init__(self):
@@ -64,20 +66,33 @@ class Usecases():
         return self.db_handler.get_account(puuid).get_login_credentials()
 
     def login(self, puuid : str):
-        self.cpy_u_into_cpy_pw(*self.get_login_credentials(puuid))
-    
+        login_credentials = self.get_login_credentials(puuid)
+        def worker():
+            self.cpy_u_into_cpy_pw(*login_credentials)
+        t = threading.Thread(target=worker, daemon=True)
+        t.start()
+
+
     def register_new_account(self, username : str, tag : str, login_username : str, password : str, server="EUW", email=""):
         account = Account.register_new_account(username, tag, login_username, password, server, email)
         self.db_handler.add_account(account)
         return account
 
     def remove_account(self, puuid : str):
-        self.db_handler.delete_account(puuid)
+            self.db_handler.delete_account(puuid)
+
+
 
 if __name__ == "__main__":
     u = Usecases()
     #u.register_new_account("Lexie Liu", "vbuck", "eventurtle", "Hentaisarecool1")
     u.login("dlksAYa2w6I-W3NscGQatfT89_BHRBH3HnKjpLuzM8itf6fa2tpBsOUKxfhZxEgA-lsmL7WpqbrONQ")
+    print("HERE")
+    for i in range(10):
+        print(i)
+        time.sleep(1)
     #account = u.get_specific_account("Tw5vQtPXXZkiCSwUymQbOeyjf8TdT0zhF5_G9enpd6_nd24aMvo3qxv3xjZdbKn0rjJCFcgd46S7rg")
     #print(account.get_login_credentials())
     #Usecases.cpy_u_into_cpy_pw("EvenTurtle","Hentaisarecool1")
+
+
