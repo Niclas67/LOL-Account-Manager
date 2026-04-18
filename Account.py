@@ -41,20 +41,18 @@ class Account():
         return self.login_username, self.password
 
     def __str__(self):
-        o = f"""
-            Username: {self.username}\n
-            Tag: {self.tag}\n
-            Login Username: {self.login_username}\n
-            Password: {self.password}\n
-            Server: {self.server}\n
-            Email: {self.email}\n
-            Puuid: {self.puuid}\n
-            Division: {self.division}\n
-            Rank: {self.rank}\n
-            LP: {self.lp}\n
-            Wins: {self.wins}\n
-            Losses: {self.losses}
-            """
+        o = f"""Username: {self.username}
+Tag: {self.tag}
+Login Username: {self.login_username}
+Password: {self.password}
+Server: {self.server}
+Email: {self.email}
+Puuid: {self.puuid}
+Division: {self.division}
+Rank: {self.rank}
+LP: {self.lp}
+Wins: {self.wins}
+Losses: {self.losses}"""
         return o
 
 def register_new_account(username : str, tag : str, login_username : str, password : str, server="EUW", email=""):

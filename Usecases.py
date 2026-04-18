@@ -22,9 +22,12 @@ class Usecases():
     def get_all_accounts(self):
         return self.db_handler.get_all_accounts()
 
+    def get_specific_account(self, puuid):
+        return self.db_handler.get_account(puuid)
+
 if __name__ == "__main__":
     u = Usecases()
-    accounts = u.get_all_accounts()
-    for account in accounts:
-        print(account)
+    #accounts = u.get_all_accounts()
+    account = u.get_specific_account("Tw5vQtPXXZkiCSwUymQbOeyjf8TdT0zhF5_G9enpd6_nd24aMvo3qxv3xjZdbKn0rjJCFcgd46S7rg")
+    print(account)
     #Usecases.cpy_u_into_cpy_pw("EvenTurtle","Hentaisarecool1")
