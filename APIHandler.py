@@ -2,7 +2,7 @@ import requests
 import json
 
 #https://developer.riotgames.com/
-API_KEY = "RGAPI-aab1c159-6c7a-4bfa-b396-4372844979a0"
+API_KEY = "RGAPI-7398a6bc-2cfc-4985-85f9-68708a04e1d5"
 
 
 class AccountNotFoundError(Exception):
@@ -45,7 +45,6 @@ def get_summonerInfo(puuid):
         }
     else:
         data = json.loads(r.text)
-
         info = {}
 
         for entry in data:
@@ -97,9 +96,9 @@ def get_summoner_name_from_puuid(puuid):
 
 
 if __name__ == "__main__":
-    import time
-    puuid = get_puuid("ballsohard","EUW")
-    print(get_summoner_name_from_puuid(puuid))
+    print(get_summonerInfo("dlksAYa2w6I-W3NscGQatfT89_BHRBH3HnKjpLuzM8itf6fa2tpBsOUKxfhZxEgA-lsmL7WpqbrONQ"))
+    #puuid = get_puuid("ballsohard","EUW")
+    #print(get_summoner_name_from_puuid(puuid))
     #print(get_summonerID(get_puuid("ballsohard","EUW")))
     #time.sleep(2)
     #print(get_info_from_name_riotID("ballsohard","EUW"))

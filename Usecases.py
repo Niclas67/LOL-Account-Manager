@@ -41,6 +41,7 @@ class Usecases():
             account.update_info()
             self.db_handler.update_account(account)
             output.append(account)
+            print("done")
         return output
 
     
@@ -91,8 +92,3 @@ if __name__ == "__main__":
     for i in range(10):
         print(i)
         time.sleep(1)
-    #account = u.get_specific_account("Tw5vQtPXXZkiCSwUymQbOeyjf8TdT0zhF5_G9enpd6_nd24aMvo3qxv3xjZdbKn0rjJCFcgd46S7rg")
-    #print(account.get_login_credentials())
-    #Usecases.cpy_u_into_cpy_pw("EvenTurtle","Hentaisarecool1")
-
-
