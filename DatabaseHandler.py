@@ -88,7 +88,14 @@ class DatabaseHandler():
 
     def get_all_accounts(self):
         o = self.cur.execute("SELECT * FROM accounts")
-        return o.fetchall()
+        o = o.fetchall()
+        if len(o)<1:
+            return None
+        accounts = []
+        for account in o:
+            accounts.append(Account(*account))
+        return accounts
+            
 
 if __name__ == "__main__":
     db_handler = DatabaseHandler()
