@@ -2,8 +2,12 @@ import customtkinter as ctk
 import Usecases
 import Account
 import webbrowser
+
+from DatabaseHandler import DatabaseHandler
+from Usecases import close_league, fix_league, launch_league
 from PIL import ImageTk, Image
 import os
+import ctypes
 
 FONT_SIZE = 20
 FONT = "Arial"
@@ -20,9 +24,12 @@ class MainWindow:
         self.window.title("League Account Manager")
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
+        window.iconbitmap("cherry.ico")
+        myappid = "mycompany.myapp.uniqueid"
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
         self.window.minsize(1300, 200)
         window_width = 1300
-        window_height = 1000
+        window_height = 700
         # Get the screen dimension
         screen_width = self.window.winfo_screenwidth()
         screen_height = self.window.winfo_screenheight()
@@ -53,9 +60,21 @@ class MainWindow:
         update_all_button = ctk.CTkButton(top_frame, width=50, fg_color=BUTTON_COLOR , command=lambda: update_all_and_restart(), text="Update all Accounts", font=(FONT, FONT_SIZE))
         update_all_button.grid(row=0, column=1, padx=20, pady=20)
 
+        close_lol_button = ctk.CTkButton(top_frame, width=50, fg_color=BUTTON_COLOR , command=lambda: close_league(), text="Close League", font=(FONT, FONT_SIZE))
+        close_lol_button.grid(row=0, column=2, padx=20, pady=20)
+
+        restart_lol_button = ctk.CTkButton(top_frame, width=50, fg_color=BUTTON_COLOR , command=lambda: fix_league(), text="Restart League", font=(FONT, FONT_SIZE))
+        restart_lol_button.grid(row=0, column=3, padx=20, pady=20)
+
+        enter_api_key_button = ctk.CTkButton(top_frame, width=50, fg_color=BUTTON_COLOR , command=lambda: self.api_window(self.window), text="Enter API-Key", font=(FONT, FONT_SIZE))
+        enter_api_key_button.grid(row=0, column=4, padx=20, pady=20)
+
+
         accounts_frame = ctk.CTkScrollableFrame(self.window, width=window_width,height=int(window_height*0.8),bg_color="transparent", fg_color="transparent")
         accounts_frame.pack(padx=20, pady=20)
+
         
+
 
 
 
@@ -315,6 +334,68 @@ class MainWindow:
             submit_button.grid(row=6, column=0, pady=10, padx=PAD_X)
 
             self.toplevel.mainloop()
+
+    
+
+
+    class api_window():
+        def __init__(self, window):
+            self.toplevel = ctk.CTkToplevel(window)
+            self.toplevel.title("API Key")
+            self.toplevel.transient(window)
+            self.toplevel.lift()
+            self.toplevel.focus_force() 
+            self.database_handler = DatabaseHandler()
+            self.api_key = self.database_handler.get_api_key()
+            ctk.set_appearance_mode("dark")
+            ctk.set_default_color_theme("blue")
+            self.toplevel.minsize(500, 400)
+            window_width = 400
+            window_height = 400
+            # Get the screen dimension
+            screen_width = self.toplevel.winfo_screenwidth()
+            screen_height = self.toplevel.winfo_screenheight()
+            # Find the center point
+            center_x = int(screen_width / 2 - window_width / 2)
+            center_y = int(screen_height / 2 - window_height / 2)
+            # Set the position of the window to the center of the screen
+            self.toplevel.geometry(f"{window_width}x{window_height}+{center_x}+{center_y}")
+            # Window is not resizable
+            self.toplevel.resizable(True, True)
+
+            self.u = Usecases.Usecases()
+            frame = ctk.CTkFrame(self.toplevel, width=window_width,height=int(window_height*0.8),bg_color="transparent", fg_color="transparent")
+            frame.pack(padx=20, pady=20)
+
+
+
+            def enter_new_key(window):
+                new_key = str(key_entry.get())
+                if str(new_key).strip() == "":
+                    return
+
+                self.database_handler.update_api_key(new_key)
+
+                window.destroy()
+                app_instance = MainWindow()
+                app_instance.mainloop()
+
+
+            label = ctk.CTkLabel(frame,text="Enter new API-KEY: ", font=(FONT, FONT_SIZE))
+            label.grid(row=0, column=0, pady=10, padx=5)
+            key_entry = ctk.CTkEntry(frame, width=250, placeholder_text="Enter new API-KEY")
+            key_entry.grid(row=0, column=1, pady=10, padx=PAD_X)
+
+            submit_button = ctk.CTkButton(frame, width=50, fg_color=BUTTON_COLOR , command=lambda window=window: enter_new_key(window), text="Set new key", font=(FONT, FONT_SIZE))
+            submit_button.grid(row=1, column=0, pady=10, padx=PAD_X)
+
+            def open_dev_site():
+                webbrowser.open("https://developer.riotgames.com/")
+
+            dev_portal_button = ctk.CTkButton(frame, width=50, fg_color=BUTTON_COLOR , command= open_dev_site , text="Open DevPortal", font=(FONT, FONT_SIZE))
+            dev_portal_button.grid(row=1, column=1, pady=10, padx=PAD_X)
+
+
 
     def mainloop(self):
         self.window.mainloop()

@@ -1,15 +1,17 @@
 import DatabaseHandler
 import Account
-import APIHandler
 import pyperclip
 import pyautogui
 import keyboard
 import threading
 import time
+import os
+import subprocess
 
 class Usecases():
     def __init__(self):
         self.db_handler = DatabaseHandler.DatabaseHandler()
+        self.api_key = self.db_handler.get_api_key()
     
     def cpy_u_into_cpy_pw(self, username : str, password : str):
         keyboard.wait("space")
@@ -82,7 +84,29 @@ class Usecases():
     def remove_account(self, puuid : str):
             self.db_handler.delete_account(puuid)
 
+    
+def close_league():
+    to_kill = ["RiotClientServices.exe","RiotClientCrashHandler.exe","LeagueClient.exe","LeagueCrashHandler64.exe","LeagueClientUx.exe","LeagueClientUxRender.exe"]
+    for entry in to_kill:
+        try:
+            os.system("taskkill /F /im " + entry)
+        except:
+            pass
+        
+def launch_league():
+    riot_client_path = r"C:\Riot Games\Riot Client\RiotClientServices.exe"
+    launch_arguments = [
+        "--launch-product=league_of_legends",
+        "--launch-patchline=live"
+    ]
+    subprocess.run([riot_client_path] + launch_arguments)
 
+def fix_league():
+    def worker():
+        close_league()
+        launch_league()
+    t = threading.Thread(target=worker, daemon=True)
+    t.start()
 
 if __name__ == "__main__":
     u = Usecases()

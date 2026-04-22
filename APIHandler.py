@@ -2,16 +2,16 @@ import requests
 import json
 
 #https://developer.riotgames.com/
-API_KEY = "RGAPI-7398a6bc-2cfc-4985-85f9-68708a04e1d5"
-
+#API_KEY = "RGAPI-7398a6bc-2cfc-4985-85f9-68708a04e1d5"
+#API_KEY = DatabaseHandler.get_api_key()
 
 class AccountNotFoundError(Exception):
     pass
 
 
-def get_puuid(user_name,riot_id):
+def get_puuid(user_name,riot_id, api_key):
     while True:
-        r = requests.get('https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/' + user_name + '/' + riot_id + '?api_key=' + API_KEY)
+        r = requests.get('https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/' + user_name + '/' + riot_id + '?api_key=' + api_key)
         try:
             puuid = json.loads(r.text)['puuid']
             break
@@ -19,9 +19,9 @@ def get_puuid(user_name,riot_id):
             raise AccountNotFoundError
     return puuid
 
-def get_summonerLevel(puuid):
+def get_summonerLevel(puuid, api_key):
     while True:
-        r = requests.get('https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/' + puuid + '?api_key=' + API_KEY)
+        r = requests.get('https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/' + puuid + '?api_key=' + api_key)
         try:
             level = json.loads(r.text)['summonerLevel']
             break
@@ -31,9 +31,9 @@ def get_summonerLevel(puuid):
     return level
 
 
-def get_summonerInfo(puuid):
+def get_summonerInfo(puuid, api_key):
     while True:
-        r = requests.get('https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/' + puuid + '?api_key=' + API_KEY)
+        r = requests.get('https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/' + puuid + '?api_key=' + api_key)
         break
     if json.loads(r.text) == []:
         info = {
@@ -71,7 +71,7 @@ def get_summonerInfo(puuid):
                     break
     return info
 
-def get_info_from_name_riotID(user_name, riot_id):
+def get_info_from_name_riotID(user_name, riot_id, api_key):
     puuid = get_puuid(user_name, riot_id)
     level = get_summonerLevel(puuid)
     info = get_summonerInfo(puuid)
@@ -82,8 +82,8 @@ def get_info_from_name_riotID(user_name, riot_id):
         info['winrate'] = "/"
     return info
 
-def get_summoner_name_from_puuid(puuid):
-    r = requests.get("https://europe.api.riotgames.com/riot/account/v1/accounts/by-puuid/" + puuid + '?api_key=' + API_KEY)
+def get_summoner_name_from_puuid(puuid, api_key):
+    r = requests.get("https://europe.api.riotgames.com/riot/account/v1/accounts/by-puuid/" + puuid + '?api_key=' + api_key)
     try:
         data = json.loads(r.text)
         game_name = data['gameName']

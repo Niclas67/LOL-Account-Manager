@@ -1,4 +1,13 @@
 import APIHandler
+import sqlite3
+
+def get_api_key():
+    con = sqlite3.connect("Accounts.db")
+    cur = con.cursor()
+    cur.execute("""
+                    SELECT key FROM api_key
+                        """)
+    return cur.fetchall()[0][0]
 
 
 class Account():
@@ -9,6 +18,7 @@ class Account():
         self.password = password
         self.server = server
         self.email = email
+        self.api_key = get_api_key()
 
         if puuid:
             self.puuid = puuid
@@ -22,13 +32,14 @@ class Account():
         self.losses = losses
 
     def update_username(self):
-        self.username, self.tag = APIHandler.get_summoner_name_from_puuid(self.puuid)
+        self.username, self.tag = APIHandler.get_summoner_name_from_puuid(self.puuid, self.api_key)
     
     def update_password(self, new_password):
         self.password = new_password
 
     def update_info(self):
-        info = APIHandler.get_summonerInfo(self.puuid)
+        info = APIHandler.get_summonerInfo(self.puuid, self.api_key)
+
 
         self.division = info["division"]
         self.rank = info["rank"]

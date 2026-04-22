@@ -1,11 +1,35 @@
 import sqlite3
 from Account import Account, register_new_account
-import APIHandler
 
 class DatabaseHandler():
     def __init__(self):
         self.con = sqlite3.connect("Accounts.db")
         self.cur = self.con.cursor()
+    
+    def create_api_key_table(self):
+        self.cur.execute("""
+                        CREATE TABLE api_key(
+                        key TEXT
+                        )
+                        """)
+    def add_api_key(self, api_key : str):
+        self.cur.execute("""
+                        INSERT INTO api_key VALUES (?)
+                         """, (api_key,))
+        self.con.commit()
+    
+    def update_api_key(self, api_key : str):
+        self.cur.execute("""
+                        DELETE FROM api_key
+                        """)
+        self.con.commit()
+        self.add_api_key(api_key)
+
+    def get_api_key(self):
+        self.cur.execute("""
+                        SELECT key FROM api_key
+                         """)
+        return self.cur.fetchall()[0][0]
 
     def create_table(self):
         self.cur.execute("""
@@ -99,7 +123,14 @@ class DatabaseHandler():
 
 if __name__ == "__main__":
     db_handler = DatabaseHandler()
-    print(db_handler.get_all_accounts())
+    #db_handler.create_api_key_table()
+    #db_handler.add_api_key("TEST_KEY")
+    db_handler.update_api_key("RGAPI-7398a6bc-2cfc-4985-85f9-68708a04e1d5")
+    print(db_handler.get_api_key())
+    #print(db_handler.get_all_accounts())
+    #a = db_handler.get_account("vZInD_wYPv4lamgO4lu-DE5BuL6yOKwccAGTtBUPjzA7stO0NnaFBbaBHQTvPJpGiY2-Cshlc0RBxA")
+    #a.division = "GRANDMASTER"
+    #db_handler.update_account(a)
     #account = register_new_account("Masaru","445","tlun","t_pw")
     #db_handler.add_account(account)
     #db_handler.delete_account("g-o7F9BEm8tdLMrb5-dKiPHgODbCO0SEgIDU6N9PoS8zj0nWEVJ6rk4GiTPtyXIBoY0amH3udNRdwQ")
