@@ -347,7 +347,10 @@ class MainWindow:
             self.toplevel.lift()
             self.toplevel.focus_force() 
             self.database_handler = DatabaseHandler()
-            self.api_key = self.database_handler.get_api_key()
+            try:
+                self.api_key = self.database_handler.get_api_key()
+            except IndexError:
+                self.api_key = "" 
             ctk.set_appearance_mode("dark")
             ctk.set_default_color_theme("blue")
             self.toplevel.minsize(500, 400)

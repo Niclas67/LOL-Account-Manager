@@ -26,10 +26,13 @@ class DatabaseHandler():
         self.add_api_key(api_key)
 
     def get_api_key(self):
-        self.cur.execute("""
-                        SELECT key FROM api_key
-                         """)
-        return self.cur.fetchall()[0][0]
+        try:
+            self.cur.execute("""
+                            SELECT key FROM api_key
+                            """)
+            return self.cur.fetchall()[0][0]
+        except IndexError:
+            return ""
 
     def create_table(self):
         self.cur.execute("""
