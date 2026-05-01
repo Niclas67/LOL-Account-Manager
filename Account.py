@@ -23,7 +23,7 @@ class Account():
         if puuid:
             self.puuid = puuid
         else:
-            self.puuid = APIHandler.get_puuid(username, tag)
+            self.puuid = APIHandler.get_puuid(username, tag, self.api_key)
 
         self.division = division 
         self.rank = rank

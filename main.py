@@ -77,7 +77,8 @@ class MainWindow:
 
 
 
-
+        if not accounts:
+            return
         for i, account in enumerate(accounts):
             row = i * 2
             if (account.wins == "0" and account.losses == "0") or "/" in (account.wins, account.losses):

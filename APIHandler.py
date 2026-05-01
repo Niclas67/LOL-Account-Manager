@@ -32,6 +32,8 @@ def get_summonerLevel(puuid, api_key):
 
 
 def get_summonerInfo(puuid, api_key):
+    print(api_key)
+    print(puuid)
     while True:
         r = requests.get('https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/' + puuid + '?api_key=' + api_key)
         break
@@ -72,9 +74,9 @@ def get_summonerInfo(puuid, api_key):
     return info
 
 def get_info_from_name_riotID(user_name, riot_id, api_key):
-    puuid = get_puuid(user_name, riot_id)
-    level = get_summonerLevel(puuid)
-    info = get_summonerInfo(puuid)
+    puuid = get_puuid(user_name, riot_id, api_key)
+    level = get_summonerLevel(puuid, api_key)
+    info = get_summonerInfo(puuid, api_key)
     info['level'] = level
     try:
         info['winrate'] = str(round((info['wins'] / (info['wins'] + info['losses']) * 100),2))+'%'
@@ -96,9 +98,16 @@ def get_summoner_name_from_puuid(puuid, api_key):
 
 
 if __name__ == "__main__":
-    print(get_summonerInfo("dlksAYa2w6I-W3NscGQatfT89_BHRBH3HnKjpLuzM8itf6fa2tpBsOUKxfhZxEgA-lsmL7WpqbrONQ"))
-    #puuid = get_puuid("ballsohard","EUW")
-    #print(get_summoner_name_from_puuid(puuid))
-    #print(get_summonerID(get_puuid("ballsohard","EUW")))
-    #time.sleep(2)
-    #print(get_info_from_name_riotID("ballsohard","EUW"))
+    DEVELOPEMENT_API_KEY = "RGAPI-12a9a45e-82b8-45f1-a94f-2b707ad42646"
+    APP_API_KEY = "RGAPI-4b23fda7-0a52-4db3-87c7-6a9a098920de"
+    
+    #puuid = get_puuid("Lexie Liu","vbuck",APP_API_KEY)
+    #summoner_level = get_summonerLevel(puuid, APP_API_KEY)
+    #summoner_info = get_summonerInfo(puuid, APP_API_KEY)
+    #summoner_name = get_summoner_name_from_puuid(puuid, APP_API_KEY)
+    #summoner_info = get_info_from_name_riotID("Lexie Liu", "vbuck", APP_API_KEY)
+    #result = get_summonerInfo("dlksAYa2w6I-W3NscGQatfT89_BHRBH3HnKjpLuzM8itf6fa2tpBsOUKxfhZxEgA-lsmL7WpqbrONQ", "RGAPI-7f716779-5917-4c25-854c-6cf19866dbf7")
+    #print(result)
+    puuid = get_puuid("Lexie Liu","vbuck",APP_API_KEY)
+    print(puuid)
+    print(puuid == "3V_31lUTMDxNzPZXPShMtVN3eqfI2zKHcyvXrVuRornpXUxpJQswijDYzmZ8gayNQetCkF0Ds9w-1g")

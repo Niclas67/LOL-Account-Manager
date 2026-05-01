@@ -125,8 +125,8 @@ if __name__ == "__main__":
     db_handler = DatabaseHandler()
     #db_handler.create_api_key_table()
     #db_handler.add_api_key("TEST_KEY")
-    db_handler.update_api_key("RGAPI-7398a6bc-2cfc-4985-85f9-68708a04e1d5")
-    print(db_handler.get_api_key())
+    puuid = db_handler.get_account("3V_31lUTMDxNzPZXPShMtVN3eqfI2zKHcyvXrVuRornpXUxpJQswijDYzmZ8gayNQetCkF0Ds9w-1g")
+    print("#"+puuid.puuid+"#")
     #print(db_handler.get_all_accounts())
     #a = db_handler.get_account("vZInD_wYPv4lamgO4lu-DE5BuL6yOKwccAGTtBUPjzA7stO0NnaFBbaBHQTvPJpGiY2-Cshlc0RBxA")
     #a.division = "GRANDMASTER"
