@@ -123,19 +123,5 @@ class DatabaseHandler():
 
 if __name__ == "__main__":
     db_handler = DatabaseHandler()
-    #db_handler.create_api_key_table()
-    #db_handler.add_api_key("TEST_KEY")
-    puuid = db_handler.get_account("3V_31lUTMDxNzPZXPShMtVN3eqfI2zKHcyvXrVuRornpXUxpJQswijDYzmZ8gayNQetCkF0Ds9w-1g")
-    print("#"+puuid.puuid+"#")
-    #print(db_handler.get_all_accounts())
-    #a = db_handler.get_account("vZInD_wYPv4lamgO4lu-DE5BuL6yOKwccAGTtBUPjzA7stO0NnaFBbaBHQTvPJpGiY2-Cshlc0RBxA")
-    #a.division = "GRANDMASTER"
-    #db_handler.update_account(a)
-    #account = register_new_account("Masaru","445","tlun","t_pw")
-    #db_handler.add_account(account)
-    #db_handler.delete_account("g-o7F9BEm8tdLMrb5-dKiPHgODbCO0SEgIDU6N9PoS8zj0nWEVJ6rk4GiTPtyXIBoY0amH3udNRdwQ")
-    #account = db_handler.get_account("JcGQa-Q3kLBp6leFDw44QwqKpXFJzrd0v8-BVq6FbUR6f8RbM2yvfJTBxEstuaw5Gw7fj9GrVMJfaQ")
-    #account.username = "TEST"
-    #account.update_info()
-    #db_handler.update_account(account)
-    #print(account)
+    db_handler.create_table()
+    db_handler.create_api_key_table()
