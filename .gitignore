@@ -2,7 +2,7 @@
 .venv/
 
 # SQLite database file
-Accounts.db
+#Accounts.db
 
 # Python cache files
 __pycache__/
