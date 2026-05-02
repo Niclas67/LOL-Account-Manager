@@ -10,17 +10,12 @@ Ideally, use a virtual environment (venv):
    pip install -r requirements.txt
    ```
 
-3. Execute:
-   ```bash
-   python DatabaseHandler.py
+3. Start the program by double-clicking:
    ```
-
-4. Start the program by double-clicking:
-   ```
-   user_runner.bat
+   runner.bat
    ```
 
    You can also create a desktop shortcut for easier access.
 
-5. Set your own API-Key by clicking Enter API-Key-> ask me for a key or get your own via the DevPortal
+4. Set your own API-Key by clicking Enter API-Key-> ask me for a key or get your own via the DevPortal
       
