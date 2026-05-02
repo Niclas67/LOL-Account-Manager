@@ -1,5 +1,5 @@
-import DatabaseHandler
-import Account
+import libraries.DatabaseHandler as DatabaseHandler
+import libraries.Account as Account
 import pyperclip
 import pyautogui
 import keyboard

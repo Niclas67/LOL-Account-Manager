@@ -1,10 +1,10 @@
 import customtkinter as ctk
-import Usecases
-import Account
+import libraries.Usecases as Usecases
+import libraries.Account as Account
 import webbrowser
 
-from DatabaseHandler import DatabaseHandler
-from Usecases import close_league, fix_league, launch_league
+from libraries.DatabaseHandler import DatabaseHandler
+from libraries.Usecases import close_league, fix_league, launch_league
 from PIL import ImageTk, Image
 import os
 import ctypes

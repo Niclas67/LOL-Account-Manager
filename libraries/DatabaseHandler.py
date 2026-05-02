@@ -1,5 +1,5 @@
 import sqlite3
-from Account import Account, register_new_account
+from libraries.Account import Account, register_new_account
 
 class DatabaseHandler():
     def __init__(self):
@@ -26,10 +26,13 @@ class DatabaseHandler():
         self.add_api_key(api_key)
 
     def get_api_key(self):
-        self.cur.execute("""
-                        SELECT key FROM api_key
-                         """)
-        return self.cur.fetchall()[0][0]
+        try:
+            self.cur.execute("""
+                            SELECT key FROM api_key
+                            """)
+            return self.cur.fetchall()[0][0]
+        except (sqlite3.OperationalError, IndexError):
+            return "0"
 
     def create_table(self):
         self.cur.execute("""
@@ -123,10 +126,12 @@ class DatabaseHandler():
 
 if __name__ == "__main__":
     db_handler = DatabaseHandler()
+    db_handler.create_table()
+    db_handler.create_api_key_table()
     #db_handler.create_api_key_table()
     #db_handler.add_api_key("TEST_KEY")
-    puuid = db_handler.get_account("3V_31lUTMDxNzPZXPShMtVN3eqfI2zKHcyvXrVuRornpXUxpJQswijDYzmZ8gayNQetCkF0Ds9w-1g")
-    print("#"+puuid.puuid+"#")
+    #puuid = db_handler.get_account("3V_31lUTMDxNzPZXPShMtVN3eqfI2zKHcyvXrVuRornpXUxpJQswijDYzmZ8gayNQetCkF0Ds9w-1g")
+    #print("#"+puuid.puuid+"#")
     #print(db_handler.get_all_accounts())
     #a = db_handler.get_account("vZInD_wYPv4lamgO4lu-DE5BuL6yOKwccAGTtBUPjzA7stO0NnaFBbaBHQTvPJpGiY2-Cshlc0RBxA")
     #a.division = "GRANDMASTER"
