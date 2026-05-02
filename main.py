@@ -24,7 +24,7 @@ class MainWindow:
         self.window.title("League Account Manager")
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
-        window.iconbitmap("cherry.ico")
+        window.iconbitmap("statics/cherry.ico")
         myappid = "mycompany.myapp.uniqueid"
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
         self.window.minsize(1300, 200)
