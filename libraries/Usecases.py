@@ -4,7 +4,6 @@ import pyperclip
 import pyautogui
 import keyboard
 import threading
-import time
 import os
 import subprocess
 
@@ -109,10 +108,4 @@ def fix_league():
     t.start()
 
 if __name__ == "__main__":
-    u = Usecases()
-    #u.register_new_account("Lexie Liu", "vbuck", "eventurtle", "Hentaisarecool1")
-    u.login("dlksAYa2w6I-W3NscGQatfT89_BHRBH3HnKjpLuzM8itf6fa2tpBsOUKxfhZxEgA-lsmL7WpqbrONQ")
-    print("HERE")
-    for i in range(10):
-        print(i)
-        time.sleep(1)
+    pass

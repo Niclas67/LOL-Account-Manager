@@ -88,6 +88,8 @@ class MainWindow:
             color = "#42f560"
             if winrate < 50:
                 color = "red"
+            if winrate == 0:
+                color = "#969292"
 
             account_Label = ctk.CTkLabel(accounts_frame, text=f"{account.username}", font=(FONT, FONT_SIZE))
             account_Label.grid(row=row, column=0, pady=10, padx=PAD_X)
