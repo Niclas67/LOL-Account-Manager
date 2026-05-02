@@ -17,7 +17,7 @@ Ideally, use a virtual environment (venv):
 
 4. Start the program by double-clicking:
    ```
-   Lol Account Manager.vbs
+   user_runner.bat
    ```
 
    You can also create a desktop shortcut for easier access.
