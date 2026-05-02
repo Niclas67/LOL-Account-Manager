@@ -1,4 +1,4 @@
-import APIHandler
+import libraries.APIHandler as APIHandler
 import sqlite3
 
 def get_api_key():

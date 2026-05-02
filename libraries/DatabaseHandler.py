@@ -1,5 +1,5 @@
 import sqlite3
-from Account import Account, register_new_account
+from libraries.Account import Account, register_new_account
 
 class DatabaseHandler():
     def __init__(self):
@@ -31,8 +31,8 @@ class DatabaseHandler():
                             SELECT key FROM api_key
                             """)
             return self.cur.fetchall()[0][0]
-        except IndexError:
-            return ""
+        except (sqlite3.OperationalError, IndexError):
+            return "0"
 
     def create_table(self):
         self.cur.execute("""
